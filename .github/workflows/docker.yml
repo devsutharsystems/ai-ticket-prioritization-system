@@ -29,3 +29,21 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: devsuthar01/ai-ticket-app:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull devsuthar01/ai-ticket-app:latest
+
+            docker stop ai-ticket-app || true
+            docker rm ai-ticket-app || true
+
+            docker run -d \
+              --name ai-ticket-app \
+              --restart unless-stopped \
+              -p 8000:8000 \
+              devsuthar01/ai-ticket-app:latest
