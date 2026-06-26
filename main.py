@@ -98,7 +98,7 @@ def assign_team(priority: str) -> str:
 @app.get("/")
 def root():
     return {
-        "message": "🚀 Automatic CI/CD deployment is working!",
+        "message": "AI Ticket Prioritization System is running",
         "docs": "/docs",
         "metrics": "/metrics"
     }
